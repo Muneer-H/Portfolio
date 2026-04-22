@@ -1,63 +1,87 @@
 import React from "react";
-import ProjectCard from "@/components/ProjectCard";
 
 const Projects = () => {
   const projects = [
     {
       id: 1,
       name: "Training Management System",
-      description:
-        "A web-based platform designed to streamline employee training processes. It allows administrators to schedule and manage training sessions, track employee attendance, and collect structured feedback after each session to measure effectiveness and improve future trainings.",
+      desc: "A web platform to streamline training processes — schedule sessions, track attendance, and collect structured feedback. Built with React, Node.js, Express, and MySQL.",
       image: "/TMSImages/tmsHome.png",
-      link: `/projects/1`,
+      link: "/projects/1",
     },
     {
       id: 2,
       name: "ExoPlanetarium",
-      description:
-        "An interactive learning platform focused on the fascinating world of exoplanets. It features engaging space-themed blogs, a quiz module to test your knowledge, and an AI-powered chatbot that answers your astronomy questions in real-time — making space exploration both fun and educational.",
+      desc: "An immersive 3D exoplanet learning platform with an AI chatbot (LLaMA), interactive quizzes, and blogs. Improved engagement by 40% with Firebase real-time updates.",
       image: "/ExoImages/exoHome.png",
       link: "/projects/2",
     },
     {
       id: 3,
       name: "MovieVerse",
-      description:
-        "A movie discovery platform that allows users to explore films across various genres, search for specific titles, and build a personalized WatchList. With a clean and intuitive interface, MovieVerse offers an enjoyable and organized way to keep track of your favorite movies.",
+      desc: "A movie discovery platform to explore films by genre, search titles, and build a personalized WatchList with a clean, intuitive interface.",
       image: "/MovieImages/movieHome.png",
       link: "/projects/3",
     },
     {
       id: 4,
       name: "GemVault",
-      description:
-        "GemVault is a blockchain-based C2C marketplace for trading certified gemstones. It ensures secure and transparent transactions by verifying sellers through government-issued certificates and tracking ownership on-chain. Each gemstone is uniquely identified, preventing duplicate or unauthorized listings and enabling trustworthy peer-to-peer trading.",
+      desc: "A blockchain-powered gemstone marketplace with on-chain certificate hash verification, reducing fraud by 70%. Automated ownership transfers via smart contracts.",
       image: "/GemImages/gemhome.png",
       link: "/projects/4",
     },
   ];
+
   return (
-    <div
-      className="min-h-[80vh] flex flex-col justify-center items-center bg-red-900 w-full py-16"
-      id="projects"
-    >
-      <h1 className="text-4xl md:text-6xl font-bold">WHAT I'VE BUILT</h1>
-      <p className="text-red-200 mt-6 text-lg">
-        Explore a collection of my recent projects, blending functionality with
-        clean design.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mx-16 mt-12">
-        {projects.map((project, index) => (
-          <ProjectCard
-            key={index}
-            description={project.description}
-            name={project.name}
-            image={project.image}
-            link={project.link}
-          />
-        ))}
+    <section id="projects" className="bg-gryffindor py-20 px-6">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="hp-section-title">The Spell Book</h2>
+        <div className="ornament">
+          <div className="ornament-line" />
+          <span className="ornament-icon">&#9670;</span>
+          <div className="ornament-line" />
+        </div>
+        <p className="hp-subtitle mb-12">
+          Each project is a spell carefully crafted, combining the finest
+          incantations of code and design.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+          {projects.map((p, i) => (
+            <div
+              key={p.id}
+              className="glass-card overflow-hidden group"
+              style={{ animation: `fadeUp 0.5s ease ${i * 0.1}s both` }}
+            >
+              <div className="overflow-hidden h-56">
+                <img
+                  src={p.image}
+                  alt={p.name}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="p-6">
+                <h3
+                  className="text-xl md:text-2xl font-bold mb-2"
+                  style={{ fontFamily: "var(--font-heading)", color: "var(--hp-gold)" }}
+                >
+                  {p.name}
+                </h3>
+                <p
+                  className="text-sm mb-5 leading-relaxed"
+                  style={{ color: "var(--hp-muted)" }}
+                >
+                  {p.desc}
+                </p>
+                <a href={p.link} className="btn-golden w-full text-center">
+                  View Details
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

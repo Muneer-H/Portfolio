@@ -1,59 +1,74 @@
 "use client";
-import React, { useRef } from "react";
-import { IoSend } from "react-icons/io5";
+import React, { useRef, useState } from "react";
 
 const ContactForm = () => {
   const name = useRef(null);
   const email = useRef(null);
   const subject = useRef(null);
   const message = useRef(null);
-  const handleSubmit = async (e) => {
-    const res = await fetch("/api/sendEmail", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        senderEmail: email.current.value,
-        receiverEmail: "muneermh41004@gmail.com",
-        name: name.current.value,
-        subject: subject.current.value,
-        message: message.current.value,
-      }),
-    });
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
 
-    const result = await res.json();
-    console.log(result);
+  const handleSubmit = async (e) => {
+    setSending(true);
+    try {
+      const res = await fetch("/api/sendEmail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          senderEmail: email.current.value,
+          receiverEmail: "muneermh41004@gmail.com",
+          name: name.current.value,
+          subject: subject.current.value,
+          message: message.current.value,
+        }),
+      });
+      const result = await res.json();
+      console.log(result);
+      setSent(true);
+      setTimeout(() => setSent(false), 3000);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSending(false);
+    }
   };
+
   return (
     <form action={(e) => handleSubmit(e)} className="w-full">
       <div className="flex flex-col gap-4 w-full">
-        <div className="sm:flex-row flex-col flex  gap-2 w-full">
+        <div className="sm:flex-row flex-col flex gap-3 w-full">
           <input
             type="text"
             placeholder="Your Name"
-            className="p-2 rounded-md bg-[#020202] border border-gray-900 text-white w-full md-w-1/2"
+            className="input-parchment w-full"
             ref={name}
           />
           <input
             type="email"
             placeholder="Your Email"
-            className="p-2 rounded-md bg-[#020202] border border-gray-900 text-white w-full md-w-1/2"
+            className="input-parchment w-full"
             ref={email}
           />
         </div>
         <input
           type="text"
           placeholder="Subject"
-          className="p-2 rounded-md bg-[#020202] border border-gray-900 text-white"
+          className="input-parchment w-full"
           ref={subject}
         />
         <textarea
-          rows={8}
-          placeholder="Your Message"
-          className="p-2 rounded-md bg-[#020202] border border-gray-900 text-white resize-none"
+          rows={7}
+          placeholder="Write your message on this enchanted parchment..."
+          className="input-parchment w-full resize-none"
           ref={message}
         ></textarea>
-        <button className="bg-red-600 text-white p-2 flex justify-center items-center gap-3 hover:cursor-pointer rounded-md hover:bg-red-700 transition">
-          Send Message <IoSend />
+        <button
+          type="submit"
+          className="btn-golden flex justify-center items-center gap-3 w-full"
+          disabled={sending}
+        >
+          {sent ? "Owl Dispatched!" : sending ? "Casting Spell..." : "Cast the Spell"}
         </button>
       </div>
     </form>

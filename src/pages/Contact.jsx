@@ -4,51 +4,88 @@ import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import ContactForm from "@/components/ContactForm";
 
-
 const Contact = () => {
+  const contactInfo = [
+    {
+      icon: <FaLocationDot />,
+      label: "Headquarters",
+      value: "Karachi, Pakistan",
+    },
+    {
+      icon: <MdEmail />,
+      label: "Owl Post",
+      value: "muneermh41004@gmail.com",
+    },
+    {
+      icon: <FaPhoneAlt />,
+      label: "Floo Network",
+      value: "+92 34322 48287",
+    },
+  ];
+
   return (
-    <div
-      className="min-h-[80vh] flex flex-col justify-center items-center w-full py-16"
-      id="services"
-    >
-      <h1 className="text-4xl md:text-6xl font-bold">Let's Connect </h1>
-      <p className="text-red-200 mt-6 text-lg text-center">
-        Have a project in mind or just want to say hello? I’m always open to new
-        opportunities and conversations.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 lg:px-20 mt-8 w-full justify-center ">
-        <div className="w-full">
-          <div className="flex gap-2 mb-4 items-start">
-            <FaLocationDot className="text-red-600 text-xl mt-1" />
-            <div>
-              <h2 className="font-semibold lg:text-2xl text-xl ">Location</h2>
-              <p className="text-red-300 text-md lg:text-lg">
-                Karachi, Pakistan
-              </p>
-            </div>
-          </div>
-          <div className="flex gap-2 mb-4 items-start">
-            <MdEmail className="text-red-600 text-xl mt-1" />
-            <div>
-              <h2 className="font-semibold text-xl lg:text-2xl ">Email</h2>
-              <p className="text-red-300 lg:text-lg text-md">
-                muneermh41004@gmail.com
-              </p>
-            </div>
-          </div>
-          <div className="flex gap-2 mb-1 items-start">
-            <FaPhoneAlt className="text-red-600 text-xl mt-1" />
-            <div>
-              <h2 className="font-semibold text-xl lg:text-2xl ">Phone</h2>
-              <p className="text-red-300 lg:text-lg text-md">+92 34322 48287</p>
-            </div>
-          </div>
+    <section id="contact" className="bg-forbidden-forest py-20 px-6">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="hp-section-title">Send an Owl</h2>
+        <div className="ornament">
+          <div className="ornament-line" />
+          <span className="ornament-icon">&#9670;</span>
+          <div className="ornament-line" />
         </div>
-        <div className="w-full flex justify-center items-center">
+        <p className="hp-subtitle mb-12">
+          Whether you seek an alliance or wish to share a spell, my owl is
+          always ready.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {/* Left — Info */}
+          <div className="flex flex-col gap-6">
+            {contactInfo.map((c, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <div
+                  className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 text-lg"
+                  style={{
+                    background: "rgba(212,164,55,0.1)",
+                    color: "var(--hp-gold)",
+                    border: "1px solid rgba(212,164,55,0.2)",
+                  }}
+                >
+                  {c.icon}
+                </div>
+                <div>
+                  <h3
+                    className="text-lg font-bold"
+                    style={{ fontFamily: "var(--font-heading)", color: "var(--hp-gold)" }}
+                  >
+                    {c.label}
+                  </h3>
+                  <p style={{ color: "var(--hp-parchment-dark)" }}>{c.value}</p>
+                </div>
+              </div>
+            ))}
+
+            {/* Dumbledore quote */}
+            <div className="glass-card p-5 mt-4">
+              <p
+                className="italic text-center"
+                style={{ color: "var(--hp-gold-dim)", fontFamily: "var(--font-body)" }}
+              >
+                &ldquo;It does not do to dwell on dreams and forget to live.&rdquo;
+              </p>
+              <p
+                className="text-sm text-center mt-2"
+                style={{ fontFamily: "var(--font-accent)", color: "var(--hp-muted)" }}
+              >
+                — Albus Dumbledore
+              </p>
+            </div>
+          </div>
+
+          {/* Right — Form */}
           <ContactForm />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

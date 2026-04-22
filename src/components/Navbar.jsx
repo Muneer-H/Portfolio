@@ -1,117 +1,113 @@
 "use client";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const toggleNavbar = () => {
-    setIsOpen(!isOpen);
-  };
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 90);
-    };
 
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 60);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const links = [
+    { href: "/#home", label: "Home" },
+    { href: "/#about", label: "The Wizard" },
+    { href: "/#experience", label: "Journey" },
+    { href: "/#services", label: "Arsenal" },
+    { href: "/#projects", label: "Spell Book" },
+    { href: "/#achievements", label: "Trophies" },
+    { href: "/#contact", label: "Send an Owl" },
+  ];
+
   return (
     <nav
-      className={` border-gray-200  fixed top-0 z-50 w-full
-      ${
+      className={`fixed top-0 z-50 w-full transition-all duration-500 ${
         isScrolled
-          ? " bg-[#0a0a0a]/40 backdrop-blur-sm"
-          : "bg-[#0a0a0a]"
-      }
-    `}
+          ? "backdrop-blur-md border-b"
+          : "bg-[var(--hp-dark)]"
+      }`}
+      style={{
+        backgroundColor: isScrolled ? "rgba(10,10,20,0.75)" : "var(--hp-dark)",
+        borderColor: isScrolled ? "rgba(212,164,55,0.12)" : "transparent",
+      }}
     >
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a className="flex items-center space-x-3 rtl:space-x-reverse">
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white ">
-            <span className="text-red-700 font-bold text-4xl">M</span>uneer{" "}
-            <span className="text-red-700 font-bold text-4xl">H</span>ussain
-          </span>
-        </a>
-        <button
-          data-collapse-toggle="navbar-default"
-          onClick={toggleNavbar}
-          type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
-          aria-controls="navbar-default"
-          aria-expanded="false"
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-5 py-3">
+        {/* Logo */}
+        <a
+          href="/#home"
+          className="flex items-center gap-2 group"
+          style={{ textDecoration: "none" }}
         >
-          <span className="sr-only">Open main menu</span>
-          <svg
-            className="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
+          <span
+            className="text-3xl md:text-4xl tracking-wider"
+            style={{ fontFamily: "var(--font-hp)", color: "var(--hp-gold)" }}
           >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M1 1h15M1 7h15M1 13h15"
-            />
+            Muneer Hussain
+          </span>
+
+        </a>
+
+        {/* Mobile toggle */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden p-2 rounded-lg transition"
+          style={{ color: "var(--hp-gold)" }}
+          aria-label="Toggle menu"
+        >
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            {isOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            )}
           </svg>
         </button>
-        <div
-          className={`${isOpen ? "" : "hidden"} w-full md:block md:w-auto`}
-          id="navbar-default"
-        >
-          <ul
-            className={`font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0   ${
-              isScrolled
-                ? "bg-transparent backdrop-filter-sm"
-                : "bg-[#0a0a0a]"
-            } border-gray-700`}
+
+        {/* Desktop links */}
+        <ul className="hidden md:flex items-center gap-7">
+          {links.map((l) => (
+            <li key={l.href}>
+              <a href={l.href} className="nav-link-magic">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {/* Mobile menu */}
+        {isOpen && (
+          <div
+            className="absolute top-full left-0 w-full md:hidden border-b"
+            style={{
+              backgroundColor: "rgba(10,10,20,0.95)",
+              borderColor: "rgba(212,164,55,0.1)",
+              animation: "slideDown 0.3s ease",
+            }}
           >
-            <li>
-              <a
-                href="/#home"
-                className="block py-2 px-3 text-white bg-red-700 rounded-sm md:bg-transparent md:text-red-700 md:p-0 text-white md:text-red-600"
-                aria-current="page"
-              >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="/#about"
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 text-white md:hover:text-red-700 hover:bg-[#1f1f1f] hover:text-white md:hover:bg-transparent"
-              >
-                About
-              </a>
-            </li>
-            <li>
-              <a
-                href="/#services"
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 text-white md:hover:text-red-700 hover:bg-[#1f1f1f] hover:text-white md:hover:bg-transparent"
-              >
-                Services
-              </a>
-            </li>
-            <li>
-              <a
-                href="/#projects"
-               className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 text-white md:hover:text-red-700 hover:bg-[#1f1f1f] hover:text-white md:hover:bg-transparent"
-              >
-                Projects
-              </a>
-            </li>
-            <li>
-              <a
-                href="/#contact"
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 text-white md:hover:text-red-700 hover:bg-[#1f1f1f] hover:text-white md:hover:bg-transparent"
-              >
-                Contact
-              </a>
-            </li>
-          </ul>
-        </div>
+            <ul className="flex flex-col p-4 gap-1">
+              {links.map((l) => (
+                <li key={l.href}>
+                  <a
+                    href={l.href}
+                    className="nav-link-magic block py-2 px-4 rounded-lg"
+                    onClick={() => setIsOpen(false)}
+                    style={{ transition: "background 0.2s" }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.background = "rgba(212,164,55,0.06)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.background = "transparent")
+                    }
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </nav>
   );

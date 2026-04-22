@@ -10,7 +10,6 @@ const IndividualProject = ({ projectID }) => {
         "A web-based platform designed to streamline employee training processes. It allows administrators to schedule and manage training sessions, track employee attendance, and collect structured feedback after each session to measure effectiveness and improve future trainings.",
       collaborators:
         "Eraj Tanweer, Tazeen Amir, Syed Ibad, Hashir Jamal, Nashwah Mohammad",
-
       techStack: {
         frontend: ["ReactJS", "TailwindCSS"],
         backend: ["NodeJS", "ExpressJS"],
@@ -30,12 +29,12 @@ const IndividualProject = ({ projectID }) => {
       projectID: 2,
       title: "ExoPlanetarium",
       description:
-        "An interactive learning platform focused on the fascinating world of exoplanets. It features engaging space-themed blogs, a quiz module to test your knowledge, and an AI-powered chatbot that answers your astronomy questions in real-time — making space exploration both fun and educational.",
+        "An immersive 3D learning platform on exoplanets with an AI chatbot (LLaMA), interactive quizzes, and blogs. Improved user engagement by 40% using Firebase real-time updates and React Three Fiber for stunning 3D visuals.",
       collaborators:
         "Syed Ibad, Hashir Jamal, Shayan Zaheer, Muhammad Bilal, Arham Hasan",
       techStack: {
-        frontend: ["ReactJS", "TailwindCSS"],
-        backend: ["NodeJS", "ExpressJS"],
+        frontend: ["ReactJS", "TailwindCSS", "React Three Fiber"],
+        backend: ["NodeJS", "ExpressJS", "LLaMA"],
         database: ["MongoDB", "Firebase"],
       },
       gallery: [
@@ -73,11 +72,11 @@ const IndividualProject = ({ projectID }) => {
       projectID: 4,
       title: "GemVault",
       description:
-        "GemVault is a blockchain-based C2C marketplace for trading certified gemstones. It ensures secure and transparent transactions by verifying sellers through government-issued certificates and tracking ownership on-chain. Each gemstone is uniquely identified, preventing duplicate or unauthorized listings and enabling trustworthy peer-to-peer trading.",
+        "A blockchain-powered C2C gemstone marketplace with on-chain certificate hash verification, reducing fraud by 70%. Automated ownership transfers via SafePay and Solidity smart contracts on Ethereum with MetaMask integration.",
       collaborators: "Hashir Jamal, Shayan Zaheer, Arham Hasan",
       techStack: {
         frontend: ["NextJS", "TailwindCSS"],
-        backend: ["NodeJS", "ExpressJS", "Solidity"],
+        backend: ["NodeJS", "ExpressJS", "Solidity", "Ethereum", "MetaMask"],
         database: ["PostgreSQL"],
       },
       gallery: [
@@ -91,47 +90,77 @@ const IndividualProject = ({ projectID }) => {
       link: "",
     },
   ];
+
   const currentProject = projects.find(
     (project) => project.projectID == projectID
   );
+
   return (
-    <div className="relative min-h-[80vh] px-12 py-15">
+    <div className="relative min-h-[80vh] px-6 md:px-12 py-16 mt-16">
       {!currentProject ? (
-      <h1 className="text-4xl md:text-5xl font-bold py-4 flex justify-center items-center mt-6">
-        Project not found.
-      </h1>
-    ) :(
+        <div className="flex flex-col justify-center items-center min-h-[60vh]">
+          <h1
+            className="text-4xl md:text-5xl font-bold text-[var(--hp-gold)]"
+            style={{ fontFamily: "var(--font-heading)" }}
+          >
+            Spell Not Found
+          </h1>
+          <p className="text-[var(--hp-muted)] mt-4 text-lg">
+            This page of the Spell Book appears to be missing...
+          </p>
+          <a href="/" className="btn-golden mt-6">
+            Return to Hogwarts
+          </a>
+        </div>
+      ) : (
         <>
-          <div className="relative w-full h-120 shadow-lg mb-10">
+          {/* Hero Banner */}
+          <div className="relative w-full h-72 md:h-96 rounded-xl overflow-hidden mb-10">
             <img
               src={currentProject.homeImage}
-              alt=""
-              className="w-full h-full opacity-30 brightness-40 rounded-lg object-cover"
+              alt={currentProject.title}
+              className="w-full h-full object-cover opacity-30 brightness-40"
             />
-            <h1 className="absolute bottom-3 px-4 left-0 text-4xl md:text-5xl font-bold py-4">
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--hp-dark)] via-transparent to-transparent" />
+            <h1
+              className="absolute bottom-4 left-6 text-3xl md:text-5xl font-bold text-[var(--hp-gold)]"
+              style={{ fontFamily: "var(--font-heading)" }}
+            >
               {currentProject.title}
             </h1>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+
+          {/* Content Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Left — Description & Gallery */}
             <div className="md:col-span-2">
-              <h2 className="text-red-600 text-lg md:text-2xl font-semibold">
-                Description:{" "}
+              <h2
+                className="text-xl md:text-2xl font-bold text-[var(--hp-gold)] mb-3"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                Description
               </h2>
-              <p className="text-slate-400 text-justify text-md md:text-md mb-4 leading-tight">
+              <p className="text-[var(--hp-parchment-dark)] text-base leading-relaxed text-justify">
                 {currentProject.description}
               </p>
-              <div className="mt-6">
-                <h2 className="text-red-600 text-lg md:text-2xl font-semibold mb-4">
-                  {" "}
-                  Project Images{" "}
+
+              <div className="mt-8">
+                <h2
+                  className="text-xl md:text-2xl font-bold text-[var(--hp-gold)] mb-4"
+                  style={{ fontFamily: "var(--font-heading)" }}
+                >
+                  Project Gallery
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {currentProject.gallery.map((image, index) => (
-                    <div key={index} className="relative w-full h-72 shadow-lg">
+                    <div
+                      key={index}
+                      className="relative w-full h-60 rounded-lg overflow-hidden parchment-card"
+                    >
                       <img
                         src={image}
-                        alt=""
-                        className="w-full h-full rounded-lg object-cover"
+                        alt={`${currentProject.title} screenshot ${index + 1}`}
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   ))}
@@ -139,49 +168,91 @@ const IndividualProject = ({ projectID }) => {
               </div>
             </div>
 
-            <div className="border border-gray-900 rounded-lg p-4 bg-[#020202] shadow-lg max-h-[350px]">
-              <h2 className="text-red-600 text-lg md:text-xl font-semibold">
-                Collaborators:{" "}
+            {/* Right — Sidebar Info */}
+            <div className="parchment-card p-6 self-start sticky top-24">
+              <h2
+                className="text-lg font-bold text-[var(--hp-gold)] mb-2"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                Collaborators
               </h2>
-              <p className="text-slate-400 text-justify text-md md:text-md mb-4 leading-tight">
+              <p className="text-[var(--hp-parchment-dark)] text-sm mb-4">
                 {currentProject.collaborators}
               </p>
-              <h2 className="text-red-600 text-lg md:text-xl font-semibold">
-                Completed:{" "}
+
+              <h2
+                className="text-lg font-bold text-[var(--hp-gold)] mb-2"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                Completed
               </h2>
-              <p className="text-slate-400 text-justify text-md md:text-md mb-4 leading-tight">
+              <p className="text-[var(--hp-parchment-dark)] text-sm mb-4">
                 {currentProject.completion}
               </p>
-              <div className="mb-4">
-                <h2 className="text-red-600 text-lg md:text-xl font-semibold">
-                  Tech Stack:{" "}
-                </h2>
-                <p className="text-slate-400 text-justify text-lg leading-tight font-medium">
-                  Frontend:{" "}
-                  <span className="text-sm text-white font-normal">
-                    {currentProject.techStack.frontend.join(", ")}{" "}
-                  </span>
-                </p>
-                <p className="text-slate-400 text-justify text-lg leading-tight font-medium">
-                  Backend:{" "}
-                  <span className="text-sm text-white font-normal">
-                    {currentProject.techStack.backend.join(", ")}{" "}
-                  </span>
-                </p>
-                <p className="text-slate-400 text-justify  leading-tight font-medium">
-                  Database:{" "}
-                  <span className="text-sm text-white font-normal">
-                    {currentProject.techStack.database.join(", ")}{" "}
-                  </span>
-                </p>
-              </div>
-              <a
-                href={currentProject.link}
-                target="_blank"
-                className=" flex justify-center items-center gap-4 hover:cursor-pointer bg-red-600 w-full text-center text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
+
+              <h2
+                className="text-lg font-bold text-[var(--hp-gold)] mb-3"
+                style={{ fontFamily: "var(--font-heading)" }}
               >
-                View on Github <FaGithub fontSize={25} />
-              </a>
+                Tech Stack
+              </h2>
+              <div className="space-y-2 mb-5">
+                <div>
+                  <span
+                    className="text-[var(--hp-gold-dim)] text-sm font-semibold"
+                    style={{ fontFamily: "var(--font-accent)" }}
+                  >
+                    Frontend:
+                  </span>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {currentProject.techStack.frontend.map((t) => (
+                      <span key={t} className="skill-badge text-xs">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <span
+                    className="text-[var(--hp-gold-dim)] text-sm font-semibold"
+                    style={{ fontFamily: "var(--font-accent)" }}
+                  >
+                    Backend:
+                  </span>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {currentProject.techStack.backend.map((t) => (
+                      <span key={t} className="skill-badge text-xs">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <span
+                    className="text-[var(--hp-gold-dim)] text-sm font-semibold"
+                    style={{ fontFamily: "var(--font-accent)" }}
+                  >
+                    Database:
+                  </span>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {currentProject.techStack.database.map((t) => (
+                      <span key={t} className="skill-badge text-xs">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {currentProject.link && (
+                <a
+                  href={currentProject.link}
+                  target="_blank"
+                  className="btn-golden flex justify-center items-center gap-3 w-full"
+                >
+                  View on GitHub <FaGithub fontSize={20} />
+                </a>
+              )}
             </div>
           </div>
         </>

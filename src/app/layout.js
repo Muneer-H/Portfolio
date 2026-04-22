@@ -1,32 +1,42 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cormorant_Garamond, Cinzel, Crimson_Text } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const crimson = Crimson_Text({
+  variable: "--font-crimson",
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
 });
 
 export const metadata = {
-  title: "Muneer's Portfolio",
-  description: "Welcome to my portfolio website, where I showcase my skills and projects as a web developer. Explore my work and get in touch!",
+  title: "Muneer Hussain | Wizarding Portfolio",
+  description:
+    "Welcome to the wizarding world of Muneer Hussain — Software Engineer, Code Wizard, and Full Stack Sorcerer. Explore magical projects and send an owl!",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${cinzel.variable} ${cormorant.variable} ${crimson.variable}`}
+        suppressHydrationWarning
       >
-        <Navbar/>  
+        <Navbar />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
